@@ -1,6 +1,15 @@
 if sudo docker ps | grep kube_webserver
 then
-echo "already running"
-else
-sudo docker run -dit -p 8089:80 -v /myweb:/usr/local/apache/htdocs/ --name kube_webserver httpd
+def downloadSpec =
+            '''{
+            "files": [
+                {
+                    "pattern": "libs-snapshot-local/*.zip",
+                    "target": "dependencies/",
+                    "props": "p1=v1;p2=v2"
+                }
+            ]
+        }'''
+
+    def buildInfo1 = server.download spec: downloadSpec
 fi
